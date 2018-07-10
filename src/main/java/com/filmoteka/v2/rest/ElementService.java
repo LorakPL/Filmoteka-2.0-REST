@@ -26,7 +26,7 @@ public class ElementService {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                elementList.add(new Element(movie.getId(), movie.getPolishTitle(), movie.getTitle(), movie.getImageURL(),
+                elementList.add(new Element(movie.getId(), movie.getPolishTitle(), movie.getTitle(), changePhoto(movie.getImageURL(), "6"),
                         movie.getCast(), movie.getYear(), movieInfo.getDuration(), movieInfo.getCountries(),
                         movieInfo.getGenre(), movieInfo.getPlot(), joinDescriptions(descriptions), null, null,
                         ElementType.MOVIE.toString()));
@@ -40,7 +40,7 @@ public class ElementService {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
-                elementList.add(new Element(series.getId(), series.getPolishTitle(), series.getTitle(), series.getImageURL(),
+                elementList.add(new Element(series.getId(), series.getPolishTitle(), series.getTitle(), changePhoto(series.getImageURL(), "6"),
                         series.getCast(), series.getYear(), seriesInfo.getDuration(), seriesInfo.getCountries(),
                         seriesInfo.getGenre(), seriesInfo.getPlot(), joinDescriptions(descriptions), null, null,
                         ElementType.SERIES.toString()));
@@ -61,5 +61,19 @@ public class ElementService {
             }
         }
         return stringBuilder.toString();
+    }
+
+    private static String changePhoto(String photo, String photoSize) {
+        StringBuilder image = new StringBuilder();
+        String[] imageParts;
+
+        imageParts = photo.split("\\.");
+        imageParts[imageParts.length - 2] = photoSize;
+        image.append(imageParts[0]);
+
+        for(int i = 0; i < imageParts.length - 1; i++){
+            image.append(".").append(imageParts[i + 1]);
+        }
+        return image.toString();
     }
 }
